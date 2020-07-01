@@ -1,0 +1,41 @@
+Calculation:
+
+def fivek_pace(t):
+    minute, second = divmod(t.seconds, 60)
+    print('%02d:%02d' % (minute, second))
+    
+fivek_pace((df['5K'][df['5K']!='0']/3.1).min())
+fivek_pace(((df['10K'] -df['5K'])[(df['10K'] -df['5K'])>'0']/3.1).min())
+fivek_pace(((df['15K'] -df['10K'])[(df['15K'] -df['10K'])>'0']/3.1).min())
+fivek_pace(((df['20K'] -df['15K'])[(df['20K'] -df['15K'])>'0']/3.1).min())
+fivek_pace(((df['25K'] -df['20K'])[(df['25K'] -df['20K'])>'0']/3.1).min())
+fivek_pace(((df['30K'] -df['25K'])[(df['30K'] -df['25K'])>'0']/3.1).min())
+fivek_pace(((df['35K'] -df['30K'])[(df['35K'] -df['30K'])>'0']/3.1).min())
+fivek_pace(((df['40K'] -df['35K'])[(df['40K'] -df['35K'])>'0']/3.1).min())
+
+05:05
+04:45
+05:05
+05:11
+05:10
+04:50
+05:10
+05:01
+
+Person hs "0" days split:
+
+df[(df['5K']=='00:00:00') & (df['10K'] == '00:00:00') & (df['15K'] == '00:00:00') & (df['20K'] == '00:00:00') & (df['25K'] == '00:00:00')]
+
+Sample input:
+
+me = df[df['Last Name'] == 'Jourdain']
+me
+K5 = ((me['5K'])/3.1).iloc[0].total_seconds()/60
+K10 = ((me['10K'] - me['5K'])/3.1).iloc[0].total_seconds()/60
+K15 = ((me['15K'] - me['10K'])/3.1).iloc[0].total_seconds()/60
+K20 = ((me['20K'] - me['15K'])/3.1).iloc[0].total_seconds()/60
+K25 = ((me['25K'] - me['20K'])/3.1).iloc[0].total_seconds()/60
+K30 = ((me['30K'] - me['25K'])/3.1).iloc[0].total_seconds()/60
+K35 = ((me['35K'] - me['30K'])/3.1).iloc[0].total_seconds()/60
+K40 = ((me['40K'] - me['35K'])/3.1).iloc[0].total_seconds()/60
+markers = {' 5K':K5, '10K':K10, '15K':K15, '20K':K20, '25K':K25, '30K':K30, '35K':K35, '40K':K40}
