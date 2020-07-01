@@ -1,0 +1,37 @@
+traindf, testdf = train_test_split(prediction_df.drop(['M/F','split_ratio'], axis = 1), test_size = 0.2)
+X_train = traindf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_train = traindf['Full_min']
+
+X_test = testdf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_test = testdf['Full_min']
+
+X_train = StandardScaler().fit_transform(X_train)
+X_test = StandardScaler().fit_transform(X_test)
+
+R = []
+RMSE = []
+for reg in np.logspace(-1,1,num = 10):
+    model = Ridge(fit_intercept=True,alpha = reg)
+    model.fit(X_train,y_train)
+    ridge_regression_prediction = model.predict(X_test)
+    ridge_regression_error = ridge_regression_prediction - y_test
+    R.append(model.score(X_test,y_test))
+    RMSE.append(sqrt(mean_squared_error(y_test, ridge_regression_prediction)))
+    
+    
+plt.plot(np.logspace(-1,1,10), RMSE,'o')
+plt.xlabel('L2 Regularization strength')
+plt.ylabel('RMSE')
+plt.title('Regularization')
+
+model = Ridge(fit_intercept=True,alpha = 0.4)
+model.fit(X_train,y_train)
+ridge_regression_prediction = model.predict(X_test)
+ridge_regression_error = ridge_regression_prediction - y_test
+print('R Square...',model.score(X_test,y_test))
+print('RMSE....',sqrt(mean_squared_error(y_test, ridge_regression_prediction)))
+
+output:
+
+R Square... 0.924279485043856
+RMSE.... 11.266839151879013
