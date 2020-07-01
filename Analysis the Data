@@ -1,0 +1,41 @@
+Finding the First half and Second of half of Marathon.
+
+df['Half_2'] = df['Official Time'] - df['Half']
+df['Half'][df['Half'] == '0']
+
+233     0 days
+2334    0 days
+3767    0 days
+7035    0 days
+8204    0 days
+9071    0 days
+10739   0 days
+14100   0 days
+14710   0 days
+14859   0 days
+19973   0 days
+20497   0 days
+21612   0 days
+21858   0 days
+22026   0 days
+22970   0 days
+23092   0 days
+Name: Half, dtype: timedelta64[ns]
+
+
+Calculate the diff btn first half and second half
+
+df['2nd_Split'] = (df['Half_2']-df["Half"])
+df['2nd_Split']= df['2nd_Split'].apply(lambda x: x.total_seconds()/60)
+sns.lmplot(data=df, y='2nd_Split', x='Overall', size=10, markers='.')
+
+Find Postive and negative split
+
+df[df['2nd_Split'] == df['2nd_Split'].max()][['5K', '10K','15K', '20K', '25K', '30K', '35K', '40K']]
+
+df[df['2nd_Split'] == df['2nd_Split'].max()]
+
+df[df['2nd_Split'] == df['2nd_Split'].min()][['5K', '10K', '15K', '20K', '25K', '30K', '35K', '40K', 'Division']]
+
+df[df['2nd_Split'] == df['2nd_Split'].min()]
+
