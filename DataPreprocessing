@@ -1,0 +1,37 @@
+HEATMAP CORRELATION:
+
+corr = df.corr()
+print(corr)
+sns.heatmap(corr, 
+         xticklabels=corr.columns, 
+         yticklabels=corr.columns)
+         
+FINISHERS BY AGE:
+
+g = sns.countplot('Age', data=df, palette="coolwarm")
+g.figure.set_size_inches(16,8)
+g.set_title("Participants per age group")
+
+FINISHERS BY AGE AND GENDER:
+
+g = sns.countplot('Age', data=df, palette="coolwarm", hue='M/F')
+g.figure.set_size_inches(16,8)
+g.set_title("Participants per Age & Gender")
+
+BOXPLOT BY AGE AND GENDER:
+
+g = sns.boxplot(df['M/F'], df['Age'], palette="coolwarm")
+g.figure.set_size_inches(16,8)
+g.set_title("Distribution of finish times per Age group")
+
+OFFICIAL TIME BY ATHELETE
+
+g = sns.jointplot( x=df['Official Time'].apply(lambda x: x.total_seconds()/3600), y=df['Age'], 
+stat_func=None, kind='hex', color="r", size=10)
+
+BOXPLOT OF FINISHING TIME BY AGE
+
+g = sns.boxplot(df['Age'], df['Official Time'].apply(lambda x: x.total_seconds()/3600), palette="coolwarm")
+g.figure.set_size_inches(13,8)
+g.set_title("Distribution of finish times per Age group")
+
