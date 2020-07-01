@@ -1,0 +1,28 @@
+traindf, testdf = train_test_split(prediction_df, test_size = 0.2)
+
+X_train = traindf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_train = traindf['Full_min']
+
+X_test = testdf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_test = testdf['Full_min']
+
+model = LinearRegression()
+model.fit(X_train,y_train)
+regression_prediction = model.predict(X_test)
+regression_error = regression_prediction - y_test
+print('R sqruare of regression...',model.score(X_test,y_test))
+print('RMSE of regression...',sqrt(mean_squared_error(y_test, regression_prediction)))
+
+sns.distplot(np.random.choice(Naive_bacnmark_error, round(0.2*len(Naive_bacnmark_error))), np.linspace(-40,40,200), kde = False)
+sns.distplot(np.random.choice(Naive_bacnmark_split_ratio_error, round(0.2*len(Naive_bacnmark_error))),np.linspace(-40,40,200), kde = False)
+sns.distplot(regression_error, np.linspace(-40,40,200), kde = False)
+plt.xlim([-40,40])
+plt.xlabel('Error in Minutes')
+plt.ylabel('Number of Runners')
+plt.legend(['Naive Guess','Naive Guess + Split offset','Linear Regression'])
+
+output:
+
+R sqruare of regression... 0.9221656196046264
+RMSE of regression... 11.562439160844102
+<matplotlib.legend.Legend at 0x7f756ad269b0>
