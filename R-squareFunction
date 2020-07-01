@@ -1,0 +1,81 @@
+/*import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from xgboost import XGBRegressor
+from math import sqrt
+from subprocess import check_output
+
+def time_to_min(string):
+    if string is not '-':
+        time_segments = string.split(':')
+        hours = int(time_segments[0])
+        mins = int(time_segments[1])
+        sec = int(time_segments[2])
+        time = hours*60 + mins + np.true_divide(sec,60)
+        return time
+    else:
+        return -1
+
+df['Half_min'] = df.Half.apply(lambda x: time_to_min(x))
+df['Full_min'] = df['Official Time'].apply(lambda x: time_to_min(x))
+df['split_ratio'] = (df['Full_min'] - df['Half_min'])/(df['Half_min'])
+
+df_split = df[df.Half_min > 0]
+
+df['5K_mins'] = df['5K'].apply(lambda x: time_to_min(x))
+df['10K_mins'] = df['10K'].apply(lambda x: time_to_min(x))
+df['10K_mins'] = df['10K_mins'] - df['5K_mins'] 
+df['15K_mins'] = df['15K'].apply(lambda x: time_to_min(x))
+df['15K_mins'] = df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+df['20K_mins'] = df['20K'].apply(lambda x: time_to_min(x))
+df['20K_mins'] = df['20K_mins'] -  df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+df['25K_mins'] = df['25K'].apply(lambda x: time_to_min(x))
+df['25K_mins'] = df['25K_mins'] - df['20K_mins'] -  df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+df['30K_mins'] = df['30K'].apply(lambda x: time_to_min(x))
+df['30K_mins'] = df['30K_mins'] -df['25K_mins'] - df['20K_mins'] -  df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+df['35K_mins'] = df['35K'].apply(lambda x: time_to_min(x))
+df['35K_mins'] = df['35K_mins'] -df['30K_mins'] -df['25K_mins'] - df['20K_mins'] -  df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+df['40K_mins'] = df['40K'].apply(lambda x: time_to_min(x))
+df['40K_mins'] = df['40K_mins'] -  df['35K_mins'] -df['30K_mins'] -df['25K_mins'] - df['20K_mins'] -  df['15K_mins'] - df['10K_mins'] -  df['5K_mins']
+
+columns = ['20K_mins','15K_mins','10K_mins','5K_mins']
+df['avg'] = df[columns].mean(axis = 1)
+df['stdev'] = df[columns].std(axis = 1)
+
+df_split = df[(~(df['5K'] == '-')) &(~(df['10K'] == '-'))&(~(df['15K'] == '-'))&(~(df['20K'] == '-'))&(~(df['25K'] == '-')) &(~(df['30K'] == '-')) &(~(df['35K'] == '-')) &(~(df['40K'] == '-'))]
+df_split = df_split[df_split.split_ratio>0]
+
+
+prediction_df = df_split[['Age','M/F','Half_min','Full_min','split_ratio','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+
+*/
+
+R-square Function:
+
+def r_square(yhat,y):
+    ybar = np.sum(y)/len(y)
+    ssreg = np.sum((yhat-ybar)**2)
+    sstot = np.sum((y - ybar)**2)
+    return ssreg/sstot
+
+rand_x = np.linspace(1,100,100)
+rand_y = np.linspace(1,100,100) + np.random.normal(0,10,100)
+plt.plot(rand_x,rand_y,'o')
+
+test_reg = LinearRegression()
+test_reg.fit(rand_x.reshape(-1, 1),rand_y)
+pred_y = test_reg.predict(rand_x.reshape(-1, 1))
+plt.plot(rand_x,pred_y)
+plt.title('Just testing the R-square function')
+print('Sklearn R square...',test_reg.score(rand_x.reshape(-1, 1),rand_y))
+print('My R square...',r_square(pred_y,rand_y))
+
+Output:
+Sklearn R square... 0.9029281584438994
+My R square... 0.9029281584438994
