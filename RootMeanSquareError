@@ -1,0 +1,37 @@
+def r_square(yhat,y):
+    ybar = np.sum(y)/len(y)
+    ssreg = np.sum((yhat-ybar)**2)
+    sstot = np.sum((y - ybar)**2)
+    return ssreg/sstot
+
+
+Naive_benchmark = df_split['Half_min']*2
+Naive_benchmark_split_ratio = df_split['Half_min']*(1 + np.median(df_split.split_ratio))
+
+Naive_bacnmark_error = Naive_benchmark - df_split['Full_min']
+Naive_bacnmark_split_ratio_error = Naive_benchmark_split_ratio - df_split['Full_min']
+
+print('R Square for naive guess...',r_square(Naive_benchmark,df_split['Full_min']))
+print('R Square for naive guess + slowing down factor...',r_square(Naive_benchmark_split_ratio,df_split['Full_min']))
+
+print('Average Error for naive guess...',np.mean(Naive_bacnmark_error))
+print('Average Error for naive guess + slowing down factor...',np.mean(Naive_bacnmark_split_ratio_error))
+
+print('RMSE for naive guess...',sqrt(mean_squared_error(df_split['Full_min'], Naive_benchmark)))
+print('RMSE Error for naive guess + slowing down factor...',sqrt(mean_squared_error(df_split['Full_min'], Naive_benchmark_split_ratio)))
+
+sns.distplot(Naive_bacnmark_error, np.linspace(-70,40,200), kde = False)
+sns.distplot(Naive_bacnmark_split_ratio_error, np.linspace(-70,40,200), kde = False)
+plt.legend(['Naive Guess','Naive Guess + Slow Down Factor'])
+plt.xlabel('Error in Minutes')
+plt.ylabel('Number of Runners')
+
+output:
+
+R Square for naive guess... 0.9127577885217539
+R Square for naive guess + slowing down factor... 0.859405674979589
+Average Error for naive guess... -16.016144279546427
+Average Error for naive guess + slowing down factor... -2.7400280478083943
+RMSE for naive guess... 20.667126566003265
+RMSE Error for naive guess + slowing down factor... 12.989306885458719
+Text(0, 0.5, 'Number of Runners')
