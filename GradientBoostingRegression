@@ -1,0 +1,30 @@
+traindf, testdf = train_test_split(prediction_df, test_size = 0.2)
+
+X_train = traindf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_train = traindf['Full_min']
+
+X_test = testdf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','stdev']]
+y_test = testdf['Full_min']
+
+
+
+X_train = traindf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','M/F','stdev']]
+y_train = traindf['Full_min']
+
+X_test = testdf[['Age','Half_min','5K_mins','10K_mins','15K_mins','20K_mins','M/F','stdev']]
+y_test = testdf['Full_min']
+
+model = XGBRegressor(learning_rate=0.01, n_estimators = 2000)
+
+model.fit(X_train,y_train)
+xgb_regression_prediction = model.predict(X_test)
+xgb_regression_error = xgb_regression_prediction - y_test
+print('Gradient Boosting Regression R Square...',model.score(X_test,y_test))
+print('RMSE of Graident Bossting Regression...',sqrt(mean_squared_error(y_test, xgb_regression_prediction)))
+
+output:
+
+[13:37:18] WARNING: /workspace/src/objective/regression_obj.cu:152: reg:linear is now deprecated in favor of reg:squarederror.
+Gradient Boosting Regression R Square... 0.9274049465390481
+RMSE of Graident Bossting Regression... 11.009455418137565
+
